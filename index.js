@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express()
 const port = process.nextTick.PORT | 5000
 
@@ -28,8 +28,21 @@ async function run() {
     try {
 
         const equipmentCollection = client.db('equipmentDB').collection('equipment')
+        app.get('/equipments', async (req, res) => {
+            const cursor = equipmentCollection.find()
+            const result = await cursor.toArray()
+            res.send(result)
 
-        app.post('/equipment', async (req, res) => {
+        })
+
+        app.get('/equipments/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await equipmentCollection.findOne(query)
+            res.send(result)
+        })
+
+        app.post('/equipments', async (req, res) => {
             const newEquipment = req.body
             console.log(newEquipment)
             const result = await equipmentCollection.insertOne(newEquipment)

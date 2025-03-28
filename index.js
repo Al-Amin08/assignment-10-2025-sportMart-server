@@ -26,6 +26,15 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
+
+        const equipmentCollection = client.db('equipmentDB').collection('equipment')
+
+        app.post('/equipment', async (req, res) => {
+            const newEquipment = req.body
+            console.log(newEquipment)
+            // const result = await equipmentCollection.insertOne(newEquipment)
+            // res.send(result)
+        })
         // Connect the client to the server	(optional starting in v4.7)
         // await client.connect();
         // Send a ping to confirm a successful connection

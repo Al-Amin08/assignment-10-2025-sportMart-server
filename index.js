@@ -32,8 +32,8 @@ async function run() {
         app.post('/equipment', async (req, res) => {
             const newEquipment = req.body
             console.log(newEquipment)
-            // const result = await equipmentCollection.insertOne(newEquipment)
-            // res.send(result)
+            const result = await equipmentCollection.insertOne(newEquipment)
+            res.send(result)
         })
         // Connect the client to the server	(optional starting in v4.7)
         // await client.connect();

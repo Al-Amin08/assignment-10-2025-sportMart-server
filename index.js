@@ -88,9 +88,19 @@ async function run() {
             const result = await equipmentCollection.insertOne(newEquipment)
             res.send(result)
         })
+        app.put('/equipments/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+            const updatedDoc = {
+                $set: req.body
+            }
+            const result = await equipmentCollection.updateOne(query, updatedDoc, options)
+            res.send(result)
+        })
 
-
-        app.delete('/myEquipments/:id', async (req, res) => {
+        app.delete('/equipments/:id', async (req, res) => {
+            console.log('going to delete', req.params.id);
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
             const result = await equipmentCollection.deleteOne(query)

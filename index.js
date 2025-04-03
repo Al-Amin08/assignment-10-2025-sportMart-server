@@ -34,6 +34,19 @@ async function run() {
             res.send(result)
 
         })
+
+
+        app.get('/allEquipments', async (req, res) => {
+            const cursor = equipmentCollection.find()
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
+        app.get('/sortAllEquipments', async (req, res) => {
+            const cursor = equipmentCollection.find()
+            const result = await cursor.sort({ price: 1 }).toArray()
+            res.send(result)
+        })
         app.get('/equipments/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
